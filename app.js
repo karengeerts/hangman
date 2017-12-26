@@ -8,6 +8,7 @@
 var wordGuess = document.querySelector(".word_label");
 var btn = document.querySelector("button");
 var guesses = document.querySelector(".wrong_guesses");
+var solution = document.querySelector(".correct_word");
 
 var wrongGuesses = [];
 
@@ -45,8 +46,8 @@ var nextImage = function(){
 };
 
 var addLetterToWrongGuesses = function(letter){
-  if (wrongGuesses.includes(letter) == false) {
-  wrongGuesses.push(letter);
+  if (wrongGuesses.includes(letter.toUpperCase()) == false) {
+  wrongGuesses.push(letter.toUpperCase());
   document.querySelector(".wrong_guesses").textContent = wrongGuesses.sort().join(" | ");
   nextImage();
 } else {
@@ -58,7 +59,7 @@ var addLetterToWrongGuesses = function(letter){
 var findLetterOccurences = function(letter){
   var array = [];
   for (var i = 0; i < word.length; i++){
-    if (word.charAt(i) == letter){
+    if (word.toLowerCase().charAt(i) == letter.toLowerCase()){
       array.push(i);
     }
   }
@@ -70,12 +71,11 @@ var showLetter =  function(letter){
   var wordShowedArray = wordShowed.split("  ");
     for (var i = 0; i < letterOccurencesArray.length; i++){
     var position = letterOccurencesArray[i];
-    wordShowedArray[position] = letter;
+    wordShowedArray[position] = letter.toUpperCase();
   }
   wordShowed = wordShowedArray.join("  ");
   wordGuess.textContent = wordShowed;
   if (wordShowed.includes("_") == false){
-    console.log("Joepie de poepie");
     endGame();
   } else {
   return wordShowed;
@@ -83,17 +83,18 @@ var showLetter =  function(letter){
 };
 
 var checkLetter = function(letter){
-  if(word.includes(letter)){
+  if(word.toLowerCase().includes(letter.toLowerCase())){
     showLetter(letter);
   } else {
-    addLetterToWrongGuesses(letter);
+    addLetterToWrongGuesses(letter.toLowerCase());
   }
 };
 
 var startGame = function(){
 document.querySelector("img").src="images/stage_1.png";
 wordGuess.textContent = " ";
-document.querySelector(".wrong_guesses").textContent = "";
+guesses.textContent = "";
+solution.textContent = "";
 wrongGuesses = [];
 word = randomWord(words);
 wordShowed = showWord(word);
@@ -107,6 +108,7 @@ var keyPressEvent = function(event){
 
 var endGame = function(){
   document.removeEventListener('keypress',keyPressEvent);
+  solution.textContent = "The word was: " + word.toUpperCase();
   // show the solution!
 };
 
