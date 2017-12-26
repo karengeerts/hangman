@@ -28,8 +28,13 @@ var nextImage = function(){
 };
 
 var addLetterToWrongGuesses = function(letter){
+  if (wrongGuesses.includes(letter) == false) {
   wrongGuesses.push(letter);
   document.querySelector(".wrong_guesses").textContent = wrongGuesses.sort().join(" | ");
+  nextImage();
+} else {
+  console.log("already tried that letter!");
+}
 };
 
 var findLetterOccurences = function(letter){
@@ -58,16 +63,25 @@ var checkLetter = function(letter){
   if(word.includes(letter)){
     showLetter(letter);
   } else {
-    nextImage();
     addLetterToWrongGuesses(letter);
   }
 };
 
+var startGame = function(){
+document.querySelector("img").src="images/stage_1.jpg";
+wordGuess.textContent = " ";
+document.querySelector(".wrong_guesses").textContent = "";
+wrongGuesses = [];
 word = randomWord(words);
-var wordShowed = showWord(word);
+wordShowed = showWord(word);
+};
+
+startGame();
 
 document.addEventListener('keypress', (event) => {
   var keyName = event.key;
   checkLetter(keyName);
   //alert('keypress event\n\n' + 'key: ' + keyName);
 });
+
+btn.addEventListener('click', startGame);

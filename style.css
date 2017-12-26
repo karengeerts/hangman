@@ -43,12 +43,14 @@ img {
   width: 100%;
   min-height: 150px;
   margin-top: 4%;
-  background-color: mistyrose;
   padding-left: 5%;
   font-style: bolder;
   font-size: 50px;
 }
 
+.play_again{
+  padding-left: 40%;
+}
 
 button{
   display: flex;
