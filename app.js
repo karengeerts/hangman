@@ -22,9 +22,15 @@ var nextImage = function(){
   var image = document.querySelector("img");
   var imageNumberLocation = image.src.length - 5;
   var imageNumberValue = image.src[imageNumberLocation];
-  imageNumberValue ++;
-  imageSource = "images/stage_" + imageNumberValue + ".jpg";
-  image.src = imageSource;
+  if (imageNumberValue < 6)
+  {
+    imageNumberValue ++;
+    imageSource = "images/stage_" + imageNumberValue + ".jpg";
+    image.src = imageSource;
+  } else {
+  image.src = "images/stage_7.jpg";
+  endGame();
+  }
 };
 
 var addLetterToWrongGuesses = function(letter){
@@ -33,6 +39,7 @@ var addLetterToWrongGuesses = function(letter){
   document.querySelector(".wrong_guesses").textContent = wrongGuesses.sort().join(" | ");
   nextImage();
 } else {
+  // show somewhere what letter you've tried and already tried it!
   console.log("already tried that letter!");
 }
 };
@@ -76,12 +83,19 @@ word = randomWord(words);
 wordShowed = showWord(word);
 };
 
-startGame();
-
-document.addEventListener('keypress', (event) => {
+var keyPressEvent = function(event){
   var keyName = event.key;
   checkLetter(keyName);
-  //alert('keypress event\n\n' + 'key: ' + keyName);
-});
+};
+
+
+var endGame = function(){
+  document.removeEventListener('keypress',keyPressEvent);
+};
+
+
+startGame();
+
+document.addEventListener('keypress', keyPressEvent);
 
 btn.addEventListener('click', startGame);
