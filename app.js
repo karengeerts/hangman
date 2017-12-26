@@ -29,19 +29,17 @@ var nextImage = function(){
   var image = document.querySelector("img");
   var imageNumberLocation = image.src.length - 5;
   var imageNumberValue = image.src[imageNumberLocation];
-  image.hidden = true;
   image.classList.remove("animated", "fadeInDown");
+  image.src = "images/empty.png";
   if (imageNumberValue < 6)
   {
     imageNumberValue ++;
     image.classList.add("animated","fadeInDown");
     imageSource = "images/stage_" + imageNumberValue + ".png";
     image.src = imageSource;
-    image.hidden = false;
   } else {
   image.src = "images/stage_7.png";
   image.classList.add("animated","fadeInDown");
-  image.hidden = false;
   endGame();
   }
 };
@@ -76,7 +74,12 @@ var showLetter =  function(letter){
   }
   wordShowed = wordShowedArray.join("  ");
   wordGuess.textContent = wordShowed;
+  if (wordShowed.includes("_") == false){
+    console.log("Joepie de poepie");
+    endGame();
+  } else {
   return wordShowed;
+  }
 };
 
 var checkLetter = function(letter){
