@@ -1,3 +1,10 @@
+/*TO DO:
+- add animation every time Hangman image gets updated
+- link to dictionary array and make it possible to link to dictionary to read meaning of word
+- if word is not guesses: show the correct solution
+- if word is guessed correctly: add congrats message
+- if word is guessed correctly: add "share on social media" function
+*/
 var wordGuess = document.querySelector(".word_label");
 var btn = document.querySelector("button");
 var guesses = document.querySelector(".wrong_guesses");
@@ -22,13 +29,19 @@ var nextImage = function(){
   var image = document.querySelector("img");
   var imageNumberLocation = image.src.length - 5;
   var imageNumberValue = image.src[imageNumberLocation];
+  image.hidden = true;
+  image.classList.remove("animated", "fadeInDown");
   if (imageNumberValue < 6)
   {
     imageNumberValue ++;
-    imageSource = "images/stage_" + imageNumberValue + ".jpg";
+    image.classList.add("animated","fadeInDown");
+    imageSource = "images/stage_" + imageNumberValue + ".png";
     image.src = imageSource;
+    image.hidden = false;
   } else {
-  image.src = "images/stage_7.jpg";
+  image.src = "images/stage_7.png";
+  image.classList.add("animated","fadeInDown");
+  image.hidden = false;
   endGame();
   }
 };
@@ -39,7 +52,7 @@ var addLetterToWrongGuesses = function(letter){
   document.querySelector(".wrong_guesses").textContent = wrongGuesses.sort().join(" | ");
   nextImage();
 } else {
-  // show somewhere what letter you've tried and already tried it!
+  // show somewhere what letter you've already tried
   console.log("already tried that letter!");
 }
 };
@@ -75,7 +88,7 @@ var checkLetter = function(letter){
 };
 
 var startGame = function(){
-document.querySelector("img").src="images/stage_1.jpg";
+document.querySelector("img").src="images/stage_1.png";
 wordGuess.textContent = " ";
 document.querySelector(".wrong_guesses").textContent = "";
 wrongGuesses = [];
@@ -91,6 +104,7 @@ var keyPressEvent = function(event){
 
 var endGame = function(){
   document.removeEventListener('keypress',keyPressEvent);
+  // show the solution!
 };
 
 
